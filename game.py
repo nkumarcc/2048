@@ -14,10 +14,10 @@ class Game2048:
 
     def add_random_tile(self):
         """Adds a random tile (90% 2, 10% 4) to an empty space."""
-        empty_tiles = list(zip(*np.where(self.board == 0)))
+        empty_tiles = self.get_possible_computer_moves()
         if empty_tiles:
             row, col = random.choice(empty_tiles)
-            self.board[row, col] = 2 if random.random() < 0.9 else 4
+            self.execute_computer_move(2 if random.random() < 0.9 else 4, row, col)
 
     def get_possible_computer_moves(self):
         """Returns coordinates of all possible computer moves with current board."""
@@ -31,7 +31,9 @@ class Game2048:
         """Executes a computer move given a tile value and coordinates."""
         self.board[row, col] = tile
 
-    def execute_player_move(self, direction: str) -> tuple[np.ndarray, int]:
+    def execute_player_move(
+        self, direction: str, save_move: bool = False
+    ) -> tuple[np.ndarray, int]:
         """Moves tiles in the given direction."""
 
         if direction not in self.get_possible_moves():
@@ -55,6 +57,10 @@ class Game2048:
         else:
             new_board = np.array(new_board)
 
+        if save_move:
+            self.board = new_board
+            self.score = score
+
         return new_board, score
 
     def _compress_and_merge(
@@ -75,6 +81,16 @@ class Game2048:
 
     def get_possible_moves(self) -> list[str]:
         return ["UP", "DOWN", "LEFT", "RIGHT"]
+
+    def is_game_over(self):
+        """Checks if there are no valid moves left."""
+        for direction in self.get_possible_moves():
+            temp_game = Game2048()
+            temp_game.board = self.board.copy()
+            temp_game.move(direction)
+            if not np.array_equal(temp_game.board, self.board):
+                return False  # There's at least one valid move
+        return True
 
     def print_board(self):
         """Prints the board for debugging."""
