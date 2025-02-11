@@ -1,5 +1,6 @@
 from game import Game2048
 import numpy as np
+import argparse
 
 
 class ExpectimaxAgent:
@@ -96,13 +97,26 @@ class ExpectimaxAgent:
 
 
 def __main__():
+    parser = argparse.ArgumentParser(description="Run 2048 game with Expectimax agent")
+    parser.add_argument(
+        "--depth", type=int, default=3, help="Depth for Expectimax search (default: 3)"
+    )
+    args = parser.parse_args()
+
     game = Game2048()
-    agent = ExpectimaxAgent(depth=4)
+    agent = ExpectimaxAgent(depth=args.depth)
+    i = 0
     while action := agent.get_action(game):
-        print("Next Player Move: ", action)
+        # print("Next Player Move: ", action)
         game.execute_player_move(action, save_move=True)
         game.add_random_tile()
-        game.print_board()
+        i += 1
+        # game.print_board()
+
+    print("Final Score: ", game.score)
+    print("Number of Moves: ", i)
+    print("Final Board")
+    game.print_board()
 
 
 if __name__ == "__main__":
