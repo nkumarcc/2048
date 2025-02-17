@@ -26,8 +26,8 @@ Pre-Watching/Reading:
 
 Improvements:
 
-- Rotating & mirroring the board to reduce variance
-- Add More Expressive N-Tuples
-- Combining multiple tuples into a single function approximator
-- Add Exploration (ε-Greedy Strategy)
-- Improve Credit Assignment (Delayed Rewards)
+- [X] Rotating & mirroring the board to reduce variance
+- [X] Add More Expressive N-Tuples
+- [ ] Combining multiple tuples into a single function approximator
+- [ ] Add Exploration (ε-Greedy Strategy)
+- [ ] Improve Credit Assignment (Delayed Rewards)
