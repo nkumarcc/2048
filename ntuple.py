@@ -10,10 +10,10 @@ class NTupleAgent:
         self,
         learning_rate=0.1,
         discount_factor=0.9,
-        should_mirror_horizontal=False,
-        should_mirror_vertical=False,
-        should_rotate_90=False,
-        should_rotate_270=False,
+        should_mirror_horizontal=True,
+        should_mirror_vertical=True,
+        should_rotate_90=True,
+        should_rotate_270=True,
     ):
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
